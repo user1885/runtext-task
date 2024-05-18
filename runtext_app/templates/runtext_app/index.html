@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+    <h1>Привет!</h1>
+    <form method="get">
+        <input type="text" name="text">
+        <input type="submit">
+    </form>
+    {% if error_msg %}
+        <span class="error-msg">
+            {{ error_msg }}
+        </span>
+    {% endif %}
+{% endblock body %}

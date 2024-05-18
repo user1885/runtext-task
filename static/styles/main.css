@@ -1,0 +1,39 @@
+@font-face {
+    font-family: CascadiaCode;
+    src: url('../fonts/CascadiaCodePL-Regular.otf');
+}
+
+html {
+    font-family: CascadiaCode;
+    color: rgb(255, 255, 183);
+    background-color: rgb(47, 47, 47);
+}
+
+body {
+    width: 600px;
+    margin: 0 auto;
+    background-color: rgb(37, 37, 37);
+    padding: 0 20px 20px 20px;
+}
+
+h1 {
+    font-size: 60px;
+    text-align: center;
+    letter-spacing: 30px;
+    margin: 0;
+    padding: 20px 0;
+    color: rgb(224, 255, 132);
+    text-shadow: 3px 3px 1px darkcyan;
+  }
+
+.error-msg {
+    font-size: 25;
+    text-align: center;
+    letter-spacing: 6px;
+    color: rgb(255, 204, 86)
+}
+
+input {
+    font-size: 20px;
+    text-align: center;
+}
