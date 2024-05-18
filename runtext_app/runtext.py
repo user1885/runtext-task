@@ -28,9 +28,6 @@ class RunTextVideo:
         self.font = None
         
     def _load_font(self):
-        # Реализация подобия lazy объекта, с альтернативным значением
-        if self.font_path is None:
-            return cv2.FONT_HERSHEY_PLAIN
         if self.font is None:
             self.font = ImageFont.truetype(self.font_path, self.font_size)
         return self.font
