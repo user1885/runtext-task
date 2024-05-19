@@ -70,7 +70,7 @@ _inst = RunTextVideo(fps=100,
                      save_to_dir=settings.MEDIA_ROOT / 'videos',
                      font_path=settings.BASE_DIR / 'static' / 'fonts' / 'CascadiaCodePL-Regular.otf',
                      font_size=60,
-                     font_color=(255, 255, 255),
+                         font_color=(255, 255, 255),
                      bg_color=(243,39,241))
 
 # Prebound функция
