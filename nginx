@@ -9,6 +9,10 @@ server {
         root /home/user/runtext;
     }
 
+    location /media/ {
+        root /home/user/runtext;   
+    }
+
     location / {
         include proxy_params;
         proxy_pass http://unix:/run/gunicorn.sock;

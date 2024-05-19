@@ -1,8 +1,8 @@
 import cv2
 from dataclasses import dataclass
 from django.conf import settings
-from PIL import ImageFont, ImageDraw, Image
 import numpy as np
+from PIL import ImageFont, ImageDraw, Image
 import os
 import uuid
 
@@ -38,7 +38,7 @@ class RunTextVideo:
         file_path = os.path.join(self.save_to_dir, file_name)
         out = cv2.VideoWriter(
             file_path,
-            cv2.VideoWriter_fourcc(*'mp4v'), 
+            cv2.VideoWriter_fourcc(*'avc1'), 
             self.fps, 
             self.video_size)
         total_fps = self.fps * self.duration

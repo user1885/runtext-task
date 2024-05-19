@@ -32,7 +32,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -88,7 +89,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'runtext',
-        'USER': 'postgress',
+        'USER': 'postgres',
         'PASSWORD': '2323',
         'HOST': 'localhost',
         'PORT': '',
@@ -129,6 +130,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+MEDIA_URL = 'media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
