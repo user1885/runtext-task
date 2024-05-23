@@ -8,7 +8,7 @@ from . import models
 class UserRequestAdmin(admin.ModelAdmin):
     def video_preview(self, obj):
         return format_html(
-            '''<video src="{}" controls></video>''', 
+            '''<video src="{}" controls>Не удалось загрузить видео.</video>''', 
             obj.video.url)
     
     video_preview.short_description = 'Video preview'
