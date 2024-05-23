@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import UserRequest
 from .runtext import create_runtext_video
-
+import traceback
 
 # Create your views here.
 
@@ -31,5 +31,6 @@ class RuntextView(TemplateView):
                 return response
             except:
                 # Сообщаем об ошибке
+                traceback.print_exc()
                 return super().get(request, error_msg='Что-то пошло не так!')
         return super().get(request)            
