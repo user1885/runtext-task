@@ -28,7 +28,7 @@ class RunTextVideo:
             self.font = ImageFont.truetype(self.font_path, self.font_size)
         return self.font
 
-    def create(self, text) -> str:
+    def create(self, text):
         if not os.path.exists(self.save_to_dir):
             os.makedirs(self.save_to_dir)
         video_id = uuid.uuid4()
@@ -60,18 +60,31 @@ class RunTextVideo:
             out.write(frame)
 
         out.release()
-        return file_path, file_name
+        return file_path
 
 # Prebound объект с данными из условия задания
 _inst = RunTextVideo(fps=100,
                      duration=3,
                      video_size=(100, 100),
-                     save_to_dir=settings.MEDIA_ROOT / 'videos',
+                     save_to_dir='temp',
                      font_path=settings.BASE_DIR / 'static' / 'fonts' / 'CascadiaCodePL-Regular.otf',
                      font_size=60,
-                         font_color=(255, 255, 255),
+                     font_color=(255, 255, 255),
                      bg_color=(243,39,241))
 
 # Prebound функция
 def create_runtext_video(text):
     return _inst.create(text)
+
+from contextlib import contextmanager
+
+
+@contextmanager
+def create_and_delete_runtext_video(text):
+    fp = create_runtext_video(text)
+    f = open(fp, 'rb')
+    try:
+        yield f
+    finally:
+        f.close()
+        os.remove(fp)

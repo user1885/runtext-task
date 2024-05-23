@@ -33,8 +33,9 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = []
-CSRF_TRUSTED_ORIGINS.append(os.getenv('CSRF_TRUSTED_ORIGINS'))
+CSRF_TRUSTED_ORIGINS = [] 
+if os.getenv('CSRF_TRUSTED_ORIGINS'):
+    CSRF_TRUSTED_ORIGINS.append(os.getenv('CSRF_TRUSTED_ORIGINS'))
 
 # Application definition
 

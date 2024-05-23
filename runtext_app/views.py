@@ -1,8 +1,9 @@
 from django.core.files import File
 from django.views.generic import TemplateView
 from django.http import HttpResponse, HttpResponseRedirect
+from pathlib import Path
 from .models import UserRequest
-from .runtext import create_runtext_video
+from .runtext import create_and_delete_runtext_video
 import traceback
 
 # Create your views here.
@@ -20,13 +21,12 @@ class RuntextView(TemplateView):
         if text and not text.isspace():
             text = text.strip()
             # Создаем видео
-            file_path, file_name = create_runtext_video(text)
             try:
-                with open(file_path, 'rb') as file:
+                with create_and_delete_runtext_video(text) as file:
                     response = HttpResponse(file.read(), content_type='video/mp4')
                     response['Content-Disposition'] = 'attachment; filename=my_video.mp4'
                     user_request = UserRequest(
-                        text=text, video=File(file, name=file_name))
+                        text=text, video=File(file, name=Path(file.name).name))
                     user_request.save()
                 return response
             except:
