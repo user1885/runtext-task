@@ -12,4 +12,4 @@ class UserRequest(models.Model):
         return open(self.file_name, 'rb')
 
     def __str__(self):
-        return '%s(%s)' % (self.text, self.id)
+        return '%s...(%s)' % (self.text[:10], self.id)
