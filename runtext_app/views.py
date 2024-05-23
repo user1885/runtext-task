@@ -20,7 +20,7 @@ class RuntextView(TemplateView):
         if text and not text.isspace():
             text = text.strip()
             # Создаем видео
-            file_path, file_name= create_runtext_video(text)
+            file_path, file_name = create_runtext_video(text)
             try:
                 with open(file_path, 'rb') as file:
                     response = HttpResponse(file.read(), content_type='video/mp4')
