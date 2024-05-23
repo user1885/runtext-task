@@ -33,6 +33,8 @@ class RunTextVideo:
         return self.font
 
     def create(self, text) -> str:
+        if not os.path.exists(self.save_to_dir):
+            os.makedirs(self.save_to_dir)
         video_id = uuid.uuid4()
         file_name = '%s.mp4' % video_id
         file_path = os.path.join(self.save_to_dir, file_name)
