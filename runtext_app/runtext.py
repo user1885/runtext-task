@@ -38,7 +38,7 @@ class RunTextVideo:
         file_path = os.path.join(self.save_to_dir, file_name)
         out = cv2.VideoWriter(
             file_path,
-            cv2.VideoWriter_fourcc(*'avc1'), 
+            cv2.VideoWriter_fourcc(*'mp4v'), 
             self.fps, 
             self.video_size)
         total_fps = self.fps * self.duration
