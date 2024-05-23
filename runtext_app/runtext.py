@@ -20,10 +20,6 @@ class RunTextVideo:
     
     def __post_init__(self):
         self.width, self.height = self.video_size
-        
-        # Высчитанное приблизительное значение, для определения скорости строки
-        self.speed_factor = 1.75
-
         # Имитация lazy объекта
         self.font = None
         
@@ -50,11 +46,12 @@ class RunTextVideo:
         x, y = self.width // 2, self.height // 2 - self.font_size / 2
         
         # Считаем скорость, основываясь на длине строки
-        speed_x = len(text) / (total_fps / self.font_size) / self.speed_factor
-
+        text_len = self._load_font().getlength(text)
+        speed_x = text_len / total_fps
+        
         for _ in range(total_fps):
             frame.fill(0)
-            x -= speed_x
+            x -= total_fps
             frame_image = Image.new('RGB', self.video_size, color=self.bg_color)
             draw = ImageDraw.Draw(frame_image)
             draw.text((x, y), text, font=self._load_font(), fill=self.font_color)
