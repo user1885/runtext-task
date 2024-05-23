@@ -51,7 +51,7 @@ class RunTextVideo:
         
         for _ in range(total_fps):
             frame.fill(0)
-            x -= total_fps
+            x -= speed_x
             frame_image = Image.new('RGB', self.video_size, color=self.bg_color)
             draw = ImageDraw.Draw(frame_image)
             draw.text((x, y), text, font=self._load_font(), fill=self.font_color)
