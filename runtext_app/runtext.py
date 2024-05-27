@@ -1,10 +1,14 @@
 import cv2
-from dataclasses import dataclass
+from contextlib import contextmanager
+from dataclasses import dataclass, field
 from django.conf import settings
+from ffmpeg import FFmpeg
+from tempfile import mkstemp
+import traceback
 import numpy as np
 from PIL import ImageFont, ImageDraw, Image
+from ffmpeg import FFmpeg
 import os
-import uuid
 
 
 @dataclass
@@ -12,12 +16,18 @@ class RunTextVideo:
     fps: int
     duration: float
     video_size: tuple
+    
     bg_color: tuple
     save_to_dir: str
+    
     font_path: str
     font_size: int
     font_color: tuple
     
+    video_ext: str = os.extsep + 'mp4'
+    source_codec: str = 'mp4v'
+    target_codec: str = 'avc1'
+
     def __post_init__(self):
         self.width, self.height = self.video_size
         # Имитация lazy объекта
@@ -31,14 +41,15 @@ class RunTextVideo:
     def create(self, text):
         if not os.path.exists(self.save_to_dir):
             os.makedirs(self.save_to_dir)
-        video_id = uuid.uuid4()
-        file_name = '%s.mp4' % video_id
-        file_path = os.path.join(self.save_to_dir, file_name)
+
+        _, source_file_path = mkstemp(suffix=self.video_ext)
+
         out = cv2.VideoWriter(
-            file_path,
-            cv2.VideoWriter_fourcc(*'mp4v'), 
+            source_file_path,
+            cv2.VideoWriter_fourcc(*self.source_codec), 
             self.fps, 
             self.video_size)
+
         total_fps = self.fps * self.duration
         frame = np.zeros((self.height, self.width, 3), dtype=np.uint8)
         
@@ -58,9 +69,23 @@ class RunTextVideo:
             frame = np.array(frame_image)
             frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
             out.write(frame)
-
         out.release()
-        return file_path
+
+        _, target_file_path = mkstemp(suffix=self.video_ext)
+        try:
+            ffmpeg = (
+                FFmpeg().
+                option('y').
+                input(source_file_path).
+                output(target_file_path, vcodec='libx264')
+            )
+            ffmpeg.execute()
+        except:
+            traceback.print_exc()
+        finally:
+            os.remove(source_file_path)
+
+        return target_file_path
 
 # Prebound объект с данными из условия задания
 _inst = RunTextVideo(fps=100,
@@ -75,9 +100,6 @@ _inst = RunTextVideo(fps=100,
 # Prebound функция
 def create_runtext_video(text):
     return _inst.create(text)
-
-from contextlib import contextmanager
-
 
 @contextmanager
 def create_and_delete_runtext_video(text):

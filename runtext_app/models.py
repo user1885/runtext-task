@@ -4,7 +4,9 @@ from django.utils import timezone
 # Create your models here.
 
 class UserRequest(models.Model):
-    video = models.FileField(upload_to='videos', blank=True)
+    VIDEOS_DIR = 'videos/'
+
+    video = models.FileField(upload_to=VIDEOS_DIR, blank=True)
     text = models.CharField(max_length=1000)
     date = models.DateTimeField(default=timezone.now)
 
